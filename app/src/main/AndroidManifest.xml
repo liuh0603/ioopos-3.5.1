@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pay.ioopos"
+    android:installLocation="internalOnly">
+    <!-- android:sharedUserId="android.uid.system" -->
+    <!-- android:largeHeap="true" -->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.usb.host" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" /> <!-- 7.0之后 使应用有权限可调系统为静音模式 -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission
+        android:name="android.permission.INSTALL_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission
+        android:name="android.permission.MODIFY_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        android:largeHeap="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup">
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove"/>
+        <activity
+            android:name=".activity.BootActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.MONKEY" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".display.CustomerActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RefundActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ConnectActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ModeActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.UpdateActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.DomainActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ShopActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.CardActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ServerActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|keyboard|fontScale|screenLayout|screenSize|smallestScreenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+
+
+                <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.UsbReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.WxReportReceiver"
+            android:exported="false" />
+
+        <service
+            android:name=".service.UpdateService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".service.LinkKitService"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="累计流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/total_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="移动流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/mobile_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="其它流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/other_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+        <TextView
+            android:id="@+id/recent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="累计流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/recent_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="上行流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/recent_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:minHeight="35dp">
+
+        <TextView
+            android:layout_width="130sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="下行流量"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/recent_rx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+</LinearLayout>

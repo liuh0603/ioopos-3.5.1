@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">艾博世</string>
+    <string name="device_is_not_binded">设备未绑定</string>
+    <string name="please_type_in_pwd">请输入密码</string>
+
+    <string name="pay_wait">等待支付</string>
+    <string name="pay_paying">正在支付</string>
+    <string name="pay_pwd">输入密码</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_fail">支付失败</string>
+    <string name="pay_expired">等待超时</string>
+    <string name="pay_error">支付异常</string>
+
+    <string name="cancel_wait">撤销交易</string>
+    <string name="cancel_success">撤销成功</string>
+    <string name="cancel_fail">撤销失败</string>
+
+    <string name="default_amount">0.00</string>
+
+    <string name="glyphicon_exclamation_sign">\ue101</string>
+    <string name="glyphicon_ok_sign">\ue084</string>
+    <string name="glyphicon_remove_sign">\ue083</string>
+    <string name="glyphicon_triangle_bottom">\ue252</string>
+    <string name="glyphicon_triangle_top">\ue253</string>
+
+    <string name="pwd_invalid">密码错误</string>
+
+    <string name="refund_submit">退款申请成功</string>
+    <string name="refund_refunding">正在退款</string>
+    <string name="refund_success">退款成功</string>
+    <string name="refund_fail">退款失败</string>
+    <string name="refund_expired">超时</string>
+
+    <string name="network_is_not_connected">网络未连接</string>
+    <string name="wifi_connected">WIFI已连接</string>
+    <string name="lost_connection">网络断开</string>
+
+    <string name="pwd_type_in_old">输入原密码</string>
+    <string name="pwd_type_in_new">输入新密码</string>
+    <string name="pwd_type_in_twice">再次输入新密码</string>
+    <string name="pwd_old_incorrect">原密码不正确</string>
+    <string name="pwd_twice_incorrect">两次输入密码不一致</string>
+    <string name="pwd_set_success">密码修改成功！</string>
+
+
+</resources>

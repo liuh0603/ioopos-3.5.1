@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="10"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="5dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/add_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="7"
+        android:gravity="center_horizontal|center_vertical"
+        android:paddingRight="5dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/before_balance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="9"
+        android:gravity="left|center_vertical"
+        android:paddingRight="5dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="9"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="@color/colorWarning"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/after_balance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="9"
+        android:gravity="right|center_vertical"
+        android:paddingRight="5dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+</LinearLayout>
