@@ -13,7 +13,6 @@ import static com.pay.ioopos.common.Constants.INTENT_PARAM_GOODS_NAME;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_ORDER_NO;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_PAY_METHOD;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_PAY_TYPE;
-import static com.pay.ioopos.common.Constants.INTENT_PARAM_REMAIN_AMOUNT;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_WX_OUT_TRADE_NO;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_WX_OUT_USER_ID;
 import static com.pay.ioopos.common.Constants.INTENT_PARAM_WX_TRANSACTION_ID;
@@ -236,10 +235,10 @@ public abstract class PayIngAbstract extends TipHorizontalFragment implements Bi
         dispatch(SUCCESS, R.string.pay_success);
         speak(R.string.pay_success);
         SerialPortPayUtils.pay(getOrderNo(), amount, PAY_SUCCESS);
-        String remainAmount =params.getStringExtra(INTENT_PARAM_REMAIN_AMOUNT);
-        getCustomerHolder().showPayProcess(PAY_SUCCESS, amount, "余额: "+remainAmount);
+        getCustomerHolder().showPayProcess(PAY_SUCCESS, amount);
         listener.onPayFinish();
     }
+
     protected final void onPaySuccess(String detail) {
         PayRecent.instance().setLastTime(System.currentTimeMillis());
         dispatch(SUCCESS, R.string.pay_success);

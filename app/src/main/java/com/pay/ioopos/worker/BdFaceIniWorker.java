@@ -21,7 +21,6 @@ import com.pay.ioopos.support.face.BdFaceSdkInfoCallback;
 import com.pay.ioopos.support.face.BdFaceSdkInitCallback;
 import com.pay.ioopos.support.face.BdFaceSdkStatus;
 
-import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

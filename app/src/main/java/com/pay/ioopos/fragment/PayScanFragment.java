@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pay.ioopos.App;
 import com.pay.ioopos.R;
 import com.pay.ioopos.channel.spay.SerialPortPayUtils;
 import com.pay.ioopos.fragment.support.BindState;

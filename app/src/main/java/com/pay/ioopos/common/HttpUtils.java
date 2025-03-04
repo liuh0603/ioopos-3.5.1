@@ -22,8 +22,6 @@ import okhttp3.Response;
 public class HttpUtils {
 	private static final String TAG = HttpUtils.class.getSimpleName();
 	private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-	private static String orderNo;
-	private static String remainAmount;
 
 	@SuppressLint("CustomX509TrustManager")
 	private static final X509TrustManager trust = new X509TrustManager() {
@@ -43,12 +41,6 @@ public class HttpUtils {
 			return certs;
 		}
 	};
-	public String getOrderNo() {
-		return orderNo;
-	}
-	public String getRemainAmount() {
-		return remainAmount;
-	}
 
 	public static String post(String url, String postBody) throws Exception {
 		Log.d(TAG,"请求地址：" + url);
@@ -105,18 +97,6 @@ public class HttpUtils {
 			Log.d(TAG,"远程接口返回状态：" + response.code());
 			resBody = response.body().string();
 			Log.d(TAG,"响应内容：" + resBody);
-			int index =resBody.indexOf("cusOrderNo");
-			if(index >0){
-				String cusOrderNo =resBody.substring(index+15);;
-				orderNo = cusOrderNo.substring(0, cusOrderNo.indexOf("\\"));
-				Log.d(TAG,"响应内容中cusOrderNo ： " + orderNo);
-			}
-			index =resBody.indexOf("remainAmount");
-			if(index >0){
-				String RemainAmount =resBody.substring(index+15);;
-				remainAmount= RemainAmount.substring(0, RemainAmount.indexOf("}"));
-				Log.d(TAG,"响应内容中余额 ： " + remainAmount);
-			}
 		}
 		return resBody;
 	}

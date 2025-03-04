@@ -16,7 +16,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.aggregate.pay.sanstar.SanstarApiFactory;
-import com.aggregate.pay.sanstar.bean.TerminalPantData;
+import com.aggregate.pay.sanstar.bean.DevicePantData;
+
 import com.aggregate.pay.sanstar.enums.NetType;
 import com.pay.ioopos.App;
 import com.pay.ioopos.channel.ipay.ApiUtils;
@@ -92,7 +93,7 @@ public class AppPantWorker extends Worker {
         }
         lastTime = System.currentTimeMillis();
 
-        TerminalPantData apiData = createPantData(getApplicationContext(), online);
+        DevicePantData apiData = createPantData(getApplicationContext(), online);
         com.aggregate.pay.sanstar.Result<Void> apiResult = SanstarApiFactory.terminalPant(ApiUtils.initApi()).execute(apiData);
         if (apiResult.getStatus() != com.aggregate.pay.sanstar.Result.Status.OK) {
             lastTime = 0;
@@ -100,8 +101,8 @@ public class AppPantWorker extends Worker {
         return Result.success();
     }
 
-    private static TerminalPantData createPantData(Context context, boolean onLine) {
-        TerminalPantData apiData = new TerminalPantData();
+    private static DevicePantData createPantData(Context context, boolean onLine) {
+        DevicePantData apiData = new DevicePantData();
         apiData.setOnline(onLine);
         apiData.setAppVer(appVersionName());
         apiData.setDevBrand(android.os.Build.BRAND);

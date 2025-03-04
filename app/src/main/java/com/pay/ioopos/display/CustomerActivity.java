@@ -42,7 +42,7 @@ public class CustomerActivity extends AbstractActivity implements CustomerProvid
             strategyView = implView;
             view = implView;
         } else if(DEV_IS_BDFACE) {
-            CustomerViewV2 implView = new CustomerViewV2(this);
+            CustomerView implView = new CustomerView(this);
             strategyView = implView;
             view = implView;
         } else {

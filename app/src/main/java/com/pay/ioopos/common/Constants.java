@@ -26,7 +26,6 @@ public final class Constants {
     public static final String INTENT_PARAM_WX_USER_ID = "userId";
     public static final String INTENT_PARAM_WX_OUT_TRADE_NO = "out_trade_no";
     public static final String INTENT_PARAM_WX_TRANSACTION_ID = "transaction_id";
-    public static final String INTENT_PARAM_REMAIN_AMOUNT = "remainAmount";
 
     public static final int NET_STATE_EN_ETHERNET = 1;// 1 << 0;
     public static final int NET_STATE_EN_WIFI = 1 << 1;

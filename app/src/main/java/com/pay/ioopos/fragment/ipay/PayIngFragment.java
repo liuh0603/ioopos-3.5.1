@@ -4,7 +4,6 @@ import static com.pay.ioopos.common.AppFactory.displayLog;
 import static com.pay.ioopos.common.AppFactory.speak;
 import static com.pay.ioopos.common.AppFactory.toast;
 import static com.pay.ioopos.channel.ipay.ApiUtils.getCusOthers;
-import static com.pay.ioopos.common.Constants.INTENT_PARAM_REMAIN_AMOUNT;
 
 import android.content.Intent;
 import android.util.Log;
@@ -21,12 +20,12 @@ import com.aggregate.pay.sanstar.enums.PayType;
 import com.aggregate.pay.sanstar.support.Client;
 import com.aggregate.pay.sanstar.support.Merch;
 import com.aggregate.pay.sanstar.support.utils.JSON;
+import com.pay.ioopos.App;
 import com.pay.ioopos.channel.ipay.ApiUtils;
 import com.pay.ioopos.fragment.PayIngAbstract;
 import com.pay.ioopos.sqlite.StoreFactory;
 import com.pay.ioopos.common.BigDecimalUtils;
 import com.pay.ioopos.common.DeviceUtils;
-import com.pay.ioopos.common.HttpUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -73,7 +72,6 @@ public class PayIngFragment extends PayIngAbstract {
         if (null == goodsName || goodsName.isEmpty()) {
             goodsName = DeviceUtils.sn();
         }
-
 
         // 元转分
         final int money = BigDecimalUtils.yuanToFen(new BigDecimal(amount));
@@ -129,16 +127,10 @@ public class PayIngFragment extends PayIngAbstract {
                 onPayFail(orderNo, payResult.getPayDesc());
                 break;
             case SUCCESS:
-                if(payMethod == PayMethod.FACE){
-                    HttpUtils https= new HttpUtils();
-                    String OrderNo =https.getOrderNo();
-                    if(OrderNo.equals(payResult.getCusOrderNo())){
-                        Integer remainAmount = Integer.valueOf(https.getRemainAmount());
-                        onPaySuccess(BigDecimalUtils.fenToYuan(remainAmount).toString() +"元");
-                    }else{
-                        onPaySuccess();
-                    }
-                }else{
+                if(App.DEV_IS_BDFACE) {
+                    String remainAmount = BigDecimalUtils.fenToYuan(payResult.getRemainAmount()).toPlainString();
+                    onPaySuccess(remainAmount);
+                } else {
                     onPaySuccess();
                 }
                 reportData(payResult.getSupOrderNo());
@@ -222,7 +214,12 @@ public class PayIngFragment extends PayIngAbstract {
                     onPayFail(orderNo, queryResult.getPayDesc());
                     break query;
                 case SUCCESS:
-                    onPaySuccess();
+                    if(App.DEV_IS_BDFACE) {
+                        String remainAmount = BigDecimalUtils.fenToYuan(queryResult.getRemainAmount()).toPlainString();
+                        onPaySuccess(remainAmount);
+                    } else {
+                        onPaySuccess();
+                    }
                     reportData(queryResult.getSupOrderNo());
                     break query;
             }
