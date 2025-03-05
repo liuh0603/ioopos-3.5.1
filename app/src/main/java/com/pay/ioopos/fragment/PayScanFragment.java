@@ -200,18 +200,20 @@ public class PayScanFragment extends TipHorizontalFragment implements BindState,
         // 刷脸
         if (store.getSwitchFacePay()) {
             if (DEV_IS_FACE) {
-                // 微信离线刷脸
-                WxOfflineFaceScan wxOfflineFaceScan = new WxOfflineFaceScan(amount);
-                cases.add(wxOfflineFaceScan);
-                // 微信在线刷脸
-                WxOnlineFaceScan wxOnlineFaceScan = new WxOnlineFaceScan(amount);
-                cases.add(wxOnlineFaceScan);
+                if (DEV_IS_BDFACE) {
+                    BdFaceScan bdFaceScan = new BdFaceScan();
+                    cases.add(bdFaceScan);
+                    getCustomerHolder().setScanFace(bdFaceScan);
+                } else {
+                    // 微信离线刷脸
+                    WxOfflineFaceScan wxOfflineFaceScan = new WxOfflineFaceScan(amount);
+                    cases.add(wxOfflineFaceScan);
+                    // 微信在线刷脸
+                    WxOnlineFaceScan wxOnlineFaceScan = new WxOnlineFaceScan(amount);
+                    cases.add(wxOnlineFaceScan);
 
-                getCustomerHolder().setScanFace(IS_OFFLINE ? wxOfflineFaceScan : wxOnlineFaceScan);
-            } else if (DEV_IS_BDFACE) {
-                BdFaceScan bdFaceScan = new BdFaceScan();
-                cases.add(bdFaceScan);
-                getCustomerHolder().setScanFace(bdFaceScan);
+                    getCustomerHolder().setScanFace(IS_OFFLINE ? wxOfflineFaceScan : wxOnlineFaceScan);
+                }
             }
         }
 

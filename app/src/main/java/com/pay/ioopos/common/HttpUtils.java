@@ -3,7 +3,6 @@ package com.pay.ioopos.common;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.aggregate.pay.sanstar.enums.PayMethod;
 import com.pay.ioopos.worker.SslCertLoadWorker;
 
 import java.security.cert.X509Certificate;

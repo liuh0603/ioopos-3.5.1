@@ -45,7 +45,7 @@ android {
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar','paykeyboard-release2.11.aar','WXPayIoTSdk-mch_1.16.388.248.aar', 'wxfacepay-release-2.21.101.aar'])
-    implementation fileTree(dir: 'libs', include: ['*.jar', 'paykeyboard-release2.11.aar', 'baiduFaceSDK_V1.2.aar', 'facelibrary-release.aar','WXPayIoTSdk-mch_1.16.388.248.aar', 'wxfacepay-release-2.32.300.aar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', 'paykeyboard-release2.11.aar', 'baiduFaceSDK_V1.3.aar', 'facelibrary-release.aar','WXPayIoTSdk-mch_1.16.388.248.aar', 'wxfacepay-release-2.32.300.aar'])
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     //implementation 'com.google.android:flexbox:1.1.0'
