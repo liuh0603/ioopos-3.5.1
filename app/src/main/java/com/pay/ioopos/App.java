@@ -64,14 +64,14 @@ public class App extends android.app.Application implements Configuration.Provid
     public static final boolean DEV_IS_801 = Build.MODEL.equals(MODEL_801_B) || Build.MODEL.equals(MODEL_SP801PRO_T) || Build.MODEL.equals(MODEL_SP801_S);// 单屏高屏刷脸设备
     public static final boolean DEV_IS_K12 = Build.MODEL.equals(MODEL_SP810) || Build.MODEL.equals(MODEL_SP306PRO_T) || Build.MODEL.equals(MODEL_SP306PRO) || Build.MODEL.equals(MODEL_SP306PRO_SDK) ;
     public static final boolean DEV_IS_SPI = DEV_IS_306_308 || DEV_IS_306_308_J;// 副屏是SPI屏的设备
-    public static final boolean DEV_IS_FACE = DEV_IS_K12 || DEV_IS_801 || DEV_IS_BDFACE;// 刷脸设备
+    public static final boolean DEV_IS_FACE = DEV_IS_K12 || DEV_IS_801;// 刷脸设备
     public static final boolean DEV_IS_ICM522 = DEV_IS_306_308;// ICM522刷卡模块设备
     public static final boolean DEV_IS_MH1903_MT1 = DEV_IS_306_308_J;// MH1903刷卡模块mt1节点设备
     public static final boolean DEV_IS_MH1903_MT2 = DEV_IS_K12 || DEV_IS_BDFACE;// MH1903 刷卡模块mt2节点设备
     public static final boolean DEV_IS_MH1903 = DEV_IS_MH1903_MT1 || DEV_IS_MH1903_MT2;// MH1903刷卡模块设备
     public static final boolean DEV_IS_NFC = DEV_IS_K12 || DEV_IS_306_308_J || DEV_IS_306_308 || DEV_IS_BDFACE;// NFC设备
-    public static final boolean DEV_IS_ZTSCAN = Build.MODEL.equals(MODEL_SP810A); //政通读卡器
-    public static final boolean DEV_IS_MTSCAN = Build.MODEL.equals(MODEL_SP810A);//DEV_IS_K12; //明泰读卡器
+    public static final boolean DEV_IS_ZTSCAN = false;  //DEV_IS_BDFACE; //政通读卡器
+    public static final boolean DEV_IS_MTSCAN = DEV_IS_BDFACE; //明泰读卡器
 
     private static App app;
 
@@ -236,7 +236,7 @@ public class App extends android.app.Application implements Configuration.Provid
         ApiUtils.pant(false, true);
 
         stopService(updateService);
-        stopService(linkKitService);
+        //stopService(linkKitService);
 
         try {
             connManager.unregisterNetworkCallback(networkCallback);

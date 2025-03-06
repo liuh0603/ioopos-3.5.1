@@ -1,7 +1,5 @@
 package com.pay.ioopos.support.face;
 
-import android.util.Log;
-
 import com.aggregate.pay.sanstar.support.Client;
 import com.aggregate.pay.sanstar.support.Factory;
 import com.aggregate.pay.sanstar.support.Merch;

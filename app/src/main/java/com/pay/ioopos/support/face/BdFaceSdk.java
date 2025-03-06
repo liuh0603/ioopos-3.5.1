@@ -33,11 +33,9 @@ public final class BdFaceSdk {
 
     private static final BdFaceSdk bdFaceSdk = new BdFaceSdk();
 
-    private static final List<String> bdFaceNos = new Vector<>();
+    private static final List<BdFaceUser> bdFaceNos = new Vector<>();
 
     private static boolean isFail = false;
-
-    private static long updateTime = 0;
 
     private BdFaceSdk() {
 
@@ -100,7 +98,7 @@ public final class BdFaceSdk {
                 updateCallback.call(status);
                 return;
             }
-            loadFace(updateCallback);
+            updateFace(updateCallback);
 
             status.setSuccess("SUCC".equals(updateResult.get("return_msg")));
             status.setCode("" + updateResult.get("return_code"));
@@ -109,76 +107,9 @@ public final class BdFaceSdk {
         });
     }
 
-    public void loadData(BdFaceSdkStatusCallback loadCallback) {
-        BdFaceSdkStatusCallback callback = new BdFaceSdkStatusCallback() {
-            @Override
-            public void call(BdFaceSdkStatus data) {
-                isFail = !data.isSuccess();
-                if (null != loadCallback) {
-                    loadCallback.call(data);
-                }
-            }
-        };
-        String merchNo = StoreFactory.settingStore().getMerchNo();
-        BdFaceUserStore bdFaceUserStore = StoreFactory.bdFaceUserStore();
-        List<BdFaceUser> list;
-        int page = 1;
-        //Log.d("liuh", "loadData isFail="+ isFail+ "  size = " + bdFaceUserStore.list(merchNo, updateTime, page).size());
-        while(!isFail&& ((list = bdFaceUserStore.list(merchNo, updateTime, page++)).size() > 0)) {
-            list.forEach(user -> {
-                if (null == user.getFaceFeature() || user.getFaceFeature().isEmpty()) {
-                    return;
-                }
-                synchronized (bdFaceNos) {
-                    bdFaceNos.add(user.getUserId());
-                    Map<String, Object> info = new HashMap<>();
-                    info.put("userID", user.getUserId());
-                    info.put("userName", user.getUserName());
-                    info.put("userInfo", user.getUserId());
-                    info.put("feature", Base64.decode(user.getFaceFeature(), 0));
-                    Log.d("liuh", "loadData user = " + user + " userID="+user.getUserId() + " userName=" +user.getUserName());
-                    BaiduFaceManager.getInstance().insertFaceDatas(info, insertResult -> baidu2MyCallback(callback, insertResult));
-                }
-            });
-        }
-        updateTime = System.currentTimeMillis();
-        BdFaceSdkStatus status = new BdFaceSdkStatus();
-        status.setSuccess(true);
-        callback.call(status);
-    }
-
+    //从本地数据库插入人脸
     public void loadFace(BdFaceSdkInitCallback loadFaceCallback) {
-        synchronized (bdFaceNos) {
-            bdFaceNos.clear();
-        }
-        BdFaceSdkStatus status = new BdFaceSdkStatus();
-        Log.d("liuh", "loadFace    status = " + status );
-
-        if(false) {
-            BdFaceUser staffer = BdFaceSdkTestData.clz2Json(BdFaceSdkTestData.loadData, BdFaceUser.class);
-            Map<String, Object> info = new HashMap<>();
-            Log.d("liuh", "staffer = " + staffer + " userID="+staffer.getUserId() + " userName=" +staffer.getUserName());
-            Log.d("liuh", "staffer = " + staffer + " userinfo="+staffer.getUserInfo() + " feature=" + Base64.decode(staffer.getFaceFeature(), 0));
-            info.put("userID", staffer.getUserId());
-            info.put("userName", staffer.getUserName());
-            info.put("userInfo", staffer.getUserInfo());
-            info.put("feature", Base64.decode(staffer.getFaceFeature(), 0));
-            BaiduFaceManager.getInstance().insertFaceDatas(info, insertResult -> {
-                if (null == insertResult) {
-                    status.setSuccess(false);
-                    status.setMessage("verity null");
-                    loadFaceCallback.call(status);
-                    return;
-                }
-                status.setSuccess("SUCC".equals(insertResult.get("return_msg")));
-                status.setCode("" + insertResult.get("return_code"));
-                status.setMessage("" + insertResult.get("return_msg"));
-                loadFaceCallback.call(status);
-            });
-            return;
-        }
-
-        BdFaceSdkStatusCallback callback = new BdFaceSdkStatusCallback() {
+        BdFaceSdkInitCallback callback = new BdFaceSdkInitCallback() {
             @Override
             public void call(BdFaceSdkStatus data) {
                 isFail = !data.isSuccess();
@@ -187,6 +118,40 @@ public final class BdFaceSdk {
                 }
             }
         };
+        String merchNo = StoreFactory.settingStore().getMerchNo();
+        BdFaceUserStore bdFaceUserStore = StoreFactory.bdFaceUserStore();
+        List<BdFaceUser> list;
+        int page = 1;
+        BdFaceSdkStatus status = new BdFaceSdkStatus();
+        while(!isFail && ((list = bdFaceUserStore.list(merchNo, 0L, page++)).size() > 0)) {
+            list.forEach(user -> {
+                if (null == user.getFaceFeature() || user.getFaceFeature().isEmpty()) {
+                    status.setSuccess(false);
+                    status.setMessage("人脸库有特征值为空");
+                    loadFaceCallback.call(status);
+                    return;
+                }
+                synchronized (bdFaceNos) {
+                    bdFaceNos.add(user);
+                    Map<String, Object> info = new HashMap<>();
+                    info.put("userID", user.getUserId());
+                    info.put("userName", user.getUserName());
+                    info.put("userInfo", user.getUserInfo());
+                    info.put("feature", Base64.decode(user.getFaceFeature(), 0));
+                    BaiduFaceManager.getInstance().insertFaceDatas(info, insertResult -> baidu2MyCallback(callback, insertResult));
+                }
+            });
+        }
+        updateFace(loadFaceCallback);
+        status.setSuccess(true);
+        callback.call(status);
+    }
+
+    //人脸更新并加载到内存
+    public void updateFace(BdFaceSdkInitCallback updateFaceCallback) {
+        synchronized (bdFaceNos) {
+            bdFaceNos.clear();
+        }
 
         SettingStore settingStore = StoreFactory.settingStore();
         BdFaceUserStore bdFaceUserStore = StoreFactory.bdFaceUserStore();
@@ -202,35 +167,66 @@ public final class BdFaceSdk {
         SanstarApiFactory.config(store::getServerUrl, new ApiClient());
         Client<BdFaceUserUpdateData, BdFaceUserUpdateResult> client = BdFaceUserHttp.updateBdFaceUser(ApiUtils.initApi());
         com.aggregate.pay.sanstar.Result<BdFaceUserUpdateResult> result = client.execute(data);
-        Log.d("liuh", "loadFace status =" + result.getStatus() + ", " + result.getData() + ", " + result.getCode() + ", " + result.getMessage());
-//        if (result.getStatus() == Result.Status.FAIL && result.getCode().contains("1017")) {
-//            Log.d("liuh", "loadFace  hhhhhhhhh  status = " + status );
-//            loadData(loadFaceCallback);
-//            return;
-//        }
+        Log.d("liuh", "status =" + result.getStatus() + ", " + result.getData() + ", " + result.getCode() + ", " + result.getMessage());
+
+        BdFaceSdkStatus status = new BdFaceSdkStatus();
         if (result.getStatus() != com.aggregate.pay.sanstar.Result.Status.OK) {
-            loadData(loadFaceCallback);
+            status.setSuccess(false);
+            status.setCode("" + 1); //预留code，因为初始化会先后台更新避免初始化判断失败
+            status.setMessage(result.getMessage());
+            updateFaceCallback.call(status);
             return;
         }
         BdFaceUserUpdateResult loadResult = result.getData();
         if (null == loadResult) {
+            status.setSuccess(false);
+            status.setCode("" + 1);
+            status.setMessage("百度人脸加载为空");
+            updateFaceCallback.call(status);
             return;
         }
         if (null == loadResult.getBeforeTime()) {
+            status.setSuccess(false);
+            status.setCode("" + 1);
+            status.setMessage("百度人脸加载异常：返回beforeTime为空");
+            updateFaceCallback.call(status);
             return;
         }
         if (!loadResult.getBeforeTime().after(bdFaceTime)) {
+            status.setSuccess(false);
+            status.setCode("" + 1);
+            status.setMessage("百度人脸加载异常：起止时间不匹配");
+            updateFaceCallback.call(status);
             return;
         }
         List<BdFaceUser> list = loadResult.getList();
         if (null == list || list.size() == 0) {
             settingStore.setFaceUserTime(loadResult.getBeforeTime());
+            status.setSuccess(true);
+            status.setMessage(result.getMessage());
+            updateFaceCallback.call(status);
             return;
         }
         list.forEach(bdFaceUserStore::mod);
         settingStore.setFaceUserTime(loadResult.getBeforeTime());
 
-        loadData(loadFaceCallback);
+        list.forEach(bdFaceUser -> {
+            if (null == bdFaceUser.getFaceFeature() || bdFaceUser.getFaceFeature().isEmpty()) {
+                status.setSuccess(false);
+                status.setMessage("人脸库有特征值为空");
+                updateFaceCallback.call(status);
+                return;
+            }
+            synchronized (bdFaceNos) {
+                bdFaceNos.add(bdFaceUser);
+                Map<String, Object> info = new HashMap<>();
+                info.put("userID", bdFaceUser.getUserId());
+                info.put("userName", bdFaceUser.getUserName());
+                info.put("userInfo", bdFaceUser.getUserInfo());
+                info.put("feature", Base64.decode(bdFaceUser.getFaceFeature(), 0));
+                BaiduFaceManager.getInstance().insertFaceDatas(info, insertResult -> baidu2MyCallback(updateFaceCallback, insertResult));
+            }
+        });
     }
 
     public void setPreview(SurfaceView surfaceView, SurfaceView surfaceIRView, BdFaceSdkStatusCallback previewCallback) {
@@ -260,10 +256,6 @@ public final class BdFaceSdk {
                     verifyCallback.call(status);
                     return;
                 }
-            Log.d("liuh", "startVerify verityResult  code=" + verityResult.get("return_code") + ", msg=" + verityResult.get("return_msg"));
-            Log.d("liuh", " return_user_info_id=" + verityResult.get("return_user_info_id") + ", return_user_info_name=" + verityResult.get("return_user_info_name"));
-
-            Log.d("liuh", " return_rgbLivenessScore=" + verityResult.get("return_rgbLivenessScore") + ", return_irLivenessScore=" + verityResult.get("return_irLivenessScore"));
                 status.setSuccess("SUCC".equals(verityResult.get("return_msg")));
                 status.setCode("" + verityResult.get("return_user_info_id"));
                 status.setMessage("" + verityResult.get("return_msg"));

@@ -44,13 +44,15 @@ public class StatisticsPayListFragment extends AbstractListFragment {
         }
         view = inflater.inflate(R.layout.fragment_statistics_pay_list, container, false);
         listView = view.findViewById(R.id.pay_order_list);
-        listView.setFocusable(true);
-        listView.setFocusableInTouchMode(true);
-        listView.requestFocus();
         listView.setOnKeyListener(new ViewKeyListener(this));
         listView.setAdapter(new StatisticsPayAdapter(getContext(), R.layout.fragment_statistics_pay_item, new ArrayList<>()));
         client = SanstarApiFactory.statisticsPay(ApiUtils.initApi());
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -70,6 +72,11 @@ public class StatisticsPayListFragment extends AbstractListFragment {
         if (totalResult == 0) {
             throw new NoRecordException();
         }
+        listView.postDelayed(() -> {
+            listView.setFocusable(true);
+            listView.setFocusableInTouchMode(true);
+            listView.requestFocus();
+        }, 100);
         return (List<Object>)map.get("list");
     }
 

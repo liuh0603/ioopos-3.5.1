@@ -115,7 +115,7 @@ public class BdFaceIniWorker extends Worker {
                 unavailable("initCallback");
                 return;
             }
-            if (!res.isSuccess()) {
+            if (!res.isSuccess() && !res.getCode().equals("1")) {
                 unavailable("initCallback: [%s]%s", res.getCode(), res.getMessage());
                 return;
             }
@@ -191,10 +191,14 @@ public class BdFaceIniWorker extends Worker {
             updateStatus(STATUS_RETRY, "设备未绑定");
             return;
         }
+
+        /*
         if (!ApiUtils.isChecked()) {
             updateStatus(STATUS_RETRY, "设备未签到");
             return;
         }
+        */
+
         if (status == STATUS_RETRY) {
             status = STATUS_NEW;
         }

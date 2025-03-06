@@ -2,7 +2,6 @@ package com.pay.ioopos.fragment;
 
 import static com.pay.ioopos.App.DEV_IS_BDFACE;
 import static com.pay.ioopos.common.AppFactory.toast;
-import static com.pay.ioopos.worker.WorkerFactory.enqueueBdFaceLoadOneTime;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -88,8 +87,7 @@ public class FaceSwitchFragment extends AbstractFragment implements KeyInfoListe
                 return true;
             case KEY_NUM_4:
                 if(DEV_IS_BDFACE) {
-                    enqueueBdFaceLoadOneTime();
-                    //setMainFragment(new BdFaceLoadFragment(this));
+                    setMainFragment(new BdFaceUpdateFragment(this));
                 } else {
                     setMainFragment(new K12FaceLoadFragment(this));// setMainFragment(new K12FaceClearFragment(this));
                 }

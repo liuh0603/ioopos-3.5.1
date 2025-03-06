@@ -50,26 +50,26 @@ public class StatisticsMenuFragment extends AbstractFragment implements KeyInfoL
     @Override
     public boolean onKeyUp(KeyInfo keyInfo) {
         switch (keyInfo) {
-        case KEY_NUM_1:
-            if (!store.getSwitchTransQuery()) {
-                setMainFragment(new DeniedFragment(this));
+            case KEY_NUM_1:
+                if (!store.getSwitchTransQuery()) {
+                    setMainFragment(new DeniedFragment(this));
+                    return true;
+                }
+                setMainFragment(new StatisticsOverviewFragment());
                 return true;
-            }
-            setMainFragment(new StatisticsOverviewFragment());
-            return true;
-        case KEY_NUM_2:
-            if (!store.getSwitchTransQuery()) {
-                setMainFragment(new DeniedFragment(this));
+            case KEY_NUM_2:
+                if (!store.getSwitchTransQuery()) {
+                    setMainFragment(new DeniedFragment(this));
+                    return true;
+                }
+                setMainFragment(new StatisticsPayListFragment());
                 return true;
-            }
-            setMainFragment(new StatisticsPayListFragment());
-            return true;
-        case KEY_NUM_3:
-            setMainFragment(new StatisticsRefundListFragment());
-            return true;
-        case KEY_NUM_4:
-            startActivity(new Intent(App.getInstance(), RefundActivity.class));
-            return true;
+            case KEY_NUM_3:
+                setMainFragment(new StatisticsRefundListFragment());
+                return true;
+            case KEY_NUM_4:
+                startActivity(new Intent(App.getInstance(), RefundActivity.class));
+                return true;
         }
 
         return false;

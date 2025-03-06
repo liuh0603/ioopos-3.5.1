@@ -247,9 +247,9 @@ public class MainActivity extends AbstractActivity implements ScanListener, Stat
             onPayExpression(null);
         }
 
-        if (isDebug()) {
-            toggleMemInfo();
-        }
+        //if (isDebug()) {
+            //toggleMemInfo();
+        //}
     }
 
     @Override

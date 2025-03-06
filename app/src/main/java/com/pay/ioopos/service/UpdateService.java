@@ -65,7 +65,7 @@ public class UpdateService extends IntentService {
     /**
      * 版本检测接口地址
      */
-    private static String apiUrl = "http://download.ioopos.com/ioopos-std/ioopos-std-%s.html";
+    private static String apiUrl = "";//http://download.ioopos.com/ioopos-std/ioopos-std-%s.html";
     private final static String clientUrl = "ioopos-std.html";
 
     //通过扫码配置获取下载host

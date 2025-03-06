@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +23,26 @@ import com.pay.ioopos.keyboard.KeyInfoListener;
 import com.pay.ioopos.keyboard.ViewKeyListener;
 import com.pay.ioopos.support.face.BdFaceSdk;
 import com.pay.ioopos.support.face.BdFaceSdkInitCallback;
-import com.pay.ioopos.support.face.BdFaceSdkLoadCallback;
 import com.pay.ioopos.support.face.BdFaceSdkStatus;
 import com.pay.ioopos.support.scan.baidu.BdFaceScan;
 import com.pay.ioopos.worker.BdFaceIniWorker;
 
-public class BdFaceLoadFragment extends TipVerticalFragment implements KeyInfoListener {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+
+public class BdFaceUpdateFragment extends TipVerticalFragment implements KeyInfoListener {
 
     private Fragment fragment;
     private BroadcastReceiver receiver;
 
-    public BdFaceLoadFragment() {
+    ExecutorService mExecutorService;
+
+    public BdFaceUpdateFragment() {
         super(WAIT, "正在更新");
     }
 
-    public BdFaceLoadFragment(Fragment fragment) {
+    public BdFaceUpdateFragment(Fragment fragment) {
         super(WAIT, "正在更新");
         this.fragment = fragment;
     }
@@ -63,6 +67,9 @@ public class BdFaceLoadFragment extends TipVerticalFragment implements KeyInfoLi
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver();
+        if(mExecutorService != null) {
+            mExecutorService.shutdown();
+        }
     }
 
     private void registerReceiver() {
@@ -102,15 +109,13 @@ public class BdFaceLoadFragment extends TipVerticalFragment implements KeyInfoLi
         // 成功了就不再接收通知
         unregisterReceiver();
 
-        BdFaceSdk.getInstance().loadFace(new BdFaceSdkInitCallback() {
+        mExecutorService = Executors.newSingleThreadExecutor();
+        mExecutorService.execute(() -> BdFaceSdk.getInstance().updateFace(new BdFaceSdkInitCallback() {
             @Override
             public void call(BdFaceSdkStatus data) {
-                if (null == data) {
+                if (data == null) {
                     dispatch(FAIL, "更新失败：API返回空");
                     return;
-                }
-                if (null == Looper.myLooper()) {
-                    Looper.prepare();
                 }
                 if (!data.isSuccess()) {
                     dispatch(FAIL, "更新失败：" + data.getMessage());
@@ -118,7 +123,8 @@ public class BdFaceLoadFragment extends TipVerticalFragment implements KeyInfoLi
                 }
                 dispatch(SUCCESS, "更新成功");
             }
-        });
+        }));
+
     }
 
     @Override
@@ -133,4 +139,5 @@ public class BdFaceLoadFragment extends TipVerticalFragment implements KeyInfoLi
         }
         return false;
     }
+
 }

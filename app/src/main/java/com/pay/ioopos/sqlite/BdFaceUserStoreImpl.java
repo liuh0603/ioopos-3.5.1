@@ -124,8 +124,8 @@ public class BdFaceUserStoreImpl implements BdFaceUserStore {
     }
 
     private static BdFaceUser convert(Cursor c) {
-        Log.d("liuh", "BdFaceUserStoreImpl convert userID=" + c.getString(c.getColumnIndex(FACE_COL_BDFACE_NO)));
-        Log.d("liuh", "BdFaceUserStoreImpl convert feature=" + c.getString(c.getColumnIndex(FACE_COL_FEATURE)));
+        //Log.d("liuh", "BdFaceUserStoreImpl convert userID=" + c.getString(c.getColumnIndex(FACE_COL_BDFACE_NO)));
+        //Log.d("liuh", "BdFaceUserStoreImpl convert feature=" + c.getString(c.getColumnIndex(FACE_COL_FEATURE)));
         BdFaceUser bdFace = new BdFaceUser();
         bdFace.setUserId(c.getString(c.getColumnIndex(FACE_COL_BDFACE_NO)));
         //bdFace.setFaceImg(c.getString(c.getColumnIndex(FACE_COL_GROUP_NO)));

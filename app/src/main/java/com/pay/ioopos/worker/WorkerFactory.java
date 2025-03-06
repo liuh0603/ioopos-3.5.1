@@ -36,11 +36,10 @@ public abstract class WorkerFactory {
         enqueueAppCheckInPeriodic();
         enqueueAppPantPeriodic();
         enqueueAppKeepAliveOneTime();
-        //enqueueWxOfflineIniPeriodic();
-        //enqueueWxOnlineIniPeriodic();
+        enqueueWxOfflineIniPeriodic();
+        enqueueWxOnlineIniPeriodic();
 		enqueueBaiduIniPeriodic();
-		enqueueBdFaceLoadOneTime();
-		//enqueueStafferLoadOneTime();
+		enqueueBdFaceUpdate();
     }
 
     public static void cancelWorkers() {
@@ -61,14 +60,22 @@ public abstract class WorkerFactory {
                         builder.build());
     }
 
-    public static void enqueueBdFaceLoadOneTime() {
-        OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest
-                .Builder(BdFaceLoadWorker.class)
+    public static void enqueueBdFaceUpdate() {
+        if (!DEV_IS_BDFACE) {
+            return;
+        }
+
+        PeriodicWorkRequest.Builder builder = new PeriodicWorkRequest
+                .Builder(BdFaceUpdateWorker.class, 30, TimeUnit.MINUTES)
+                .setInitialDelay(30, TimeUnit.MINUTES)
                 .setConstraints(constraints);
 
-        WorkManager.getInstance(App.getInstance()).enqueue(builder.build());
+        WorkManager.getInstance(App.getInstance())
+                .enqueueUniquePeriodicWork(BdFaceUpdateWorker.class.getSimpleName(),
+                ExistingPeriodicWorkPolicy.REPLACE,
+                        builder.build());
     }
-	
+
     public static void enqueuePayRepealOneTime(String cusOrderNo) {
 
         Data data = new Data.Builder()
@@ -169,7 +176,7 @@ public abstract class WorkerFactory {
     }
 
     public static void enqueueWxOfflineIniOneTime(boolean reset) {
-        if (!App.DEV_IS_FACE || !MyWxPayFace.IS_OFFLINE) {
+        if (!App.DEV_IS_FACE || !MyWxPayFace.IS_OFFLINE || DEV_IS_BDFACE) {
             return;
         }
         Data data = new Data.Builder()
