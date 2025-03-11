@@ -71,7 +71,7 @@ public class UpdateFragment extends TipVerticalFragment {
         if (!file.setWritable(true)) {
             return;
         }
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[2048];
         int length;
         Response res = HttpUtils.download(url);
         if (!res.isSuccessful()) {
